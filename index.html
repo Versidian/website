@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Versidian</title>
+<meta name="description" content="Versidian — prove age, keep control." />
+<style>
+  /* ============================================================
+     ZOHO FORM: replace the href on the inquiry button below
+     (search for PASTE_YOUR_ZOHO_FORM_URL). That is the only edit
+     needed to make the button live.
+     ============================================================ */
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500&display=swap');
+
+  :root{
+    --display:'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --body:'Inter', ui-sans-serif, system-ui, sans-serif;
+    --bg:#08070F; --bgGlow:#120F26;
+    --ink:#F4F3FA; --inkSoft:#A39EC4; --inkFaint:#6E6990;
+    --violet:#6B5BE0; --periwinkle:#9D95F0; --lavender:#C7C2FA;
+    --line:rgba(157,149,240,0.18);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(1100px 700px at 78% -10%, var(--bgGlow) 0%, transparent 60%),
+      radial-gradient(900px 600px at 10% 110%, #0E0B1F 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .atmosphere{
+    position:fixed; inset:0; pointer-events:none;
+    background:radial-gradient(520px 520px at 50% 30%, rgba(107,91,224,0.10) 0%, transparent 70%);
+    animation:breathe 9s ease-in-out infinite;
+  }
+  @keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+
+  .wrap{position:relative; max-width:560px; margin:0 auto; padding:0 24px 64px;
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center; gap:44px;}
+
+  /* wordmark with the barred E */
+  .mark{display:flex; align-items:center; justify-content:center;
+    font-family:var(--display); font-size:clamp(2.6rem,11vw,4.6rem); font-weight:500;
+    letter-spacing:.16em; line-height:1; user-select:none;}
+  .bars{display:inline-flex; flex-direction:column; justify-content:center; gap:.13em;
+    height:.72em; margin:0 .04em;}
+  .bars i{display:block; width:.62em; height:.11em; border-radius:1px;
+    background:linear-gradient(90deg,var(--violet),var(--periwinkle));
+    box-shadow:0 0 12px rgba(107,91,224,.53);}
+  .bars i.mid{width:.5em;}
+  .tagline{font-family:var(--display); font-weight:400; text-align:center;
+    font-size:clamp(1rem,3.4vw,1.35rem); letter-spacing:.05em; color:var(--inkSoft); margin:0;}
+
+  /* proof chip */
+  .chip{max-width:440px; width:100%; margin:0 auto; text-align:left; position:relative;
+    background:linear-gradient(180deg,rgba(157,149,240,0.06),rgba(255,255,255,0.015));
+    border:1px solid var(--line); border-radius:18px; padding:22px 22px 20px;
+    backdrop-filter:blur(6px); box-shadow:0 30px 80px -40px rgba(107,91,224,.4);}
+  .chip-head{display:flex; flex-direction:column; gap:4px; margin-bottom:16px;}
+  .eyebrow{font-size:.68rem; text-transform:uppercase; letter-spacing:.18em; color:var(--inkFaint);}
+  .query{font-family:var(--display); font-size:1.05rem; color:var(--ink);}
+  .redacted{display:grid; gap:9px; padding:14px; border-radius:12px;
+    background:rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.05); margin-bottom:16px;}
+  .row{display:flex; justify-content:space-between; gap:14px; font-size:.82rem;}
+  .row .label{color:var(--inkFaint);}
+  .row .val{color:var(--inkSoft); font-family:var(--display); letter-spacing:.08em; opacity:.7;}
+  .answer{min-height:40px; display:flex; flex-direction:column; gap:6px;}
+  .run{font-family:var(--body); font-size:.85rem; font-weight:500; color:var(--bg); cursor:pointer;
+    background:linear-gradient(90deg,var(--periwinkle),var(--lavender)); border:none;
+    border-radius:9px; padding:10px 16px;}
+  .run:hover{filter:brightness(1.08);}
+  .bit{font-family:var(--display); font-weight:600; font-size:1.8rem; letter-spacing:.1em;
+    background:linear-gradient(90deg,var(--periwinkle),var(--lavender));
+    -webkit-background-clip:text; background-clip:text; color:transparent; animation:pop .4s ease both;}
+  @keyframes pop{from{opacity:0; transform:translateY(4px)}to{opacity:1; transform:none}}
+  .note{font-size:.82rem; line-height:1.5; color:var(--inkSoft);}
+  .reset{position:absolute; top:16px; right:16px; font-size:.68rem; letter-spacing:.04em;
+    color:var(--inkFaint); background:none; border:none; cursor:pointer;}
+  .reset:hover{color:var(--periwinkle);}
+
+  /* inquiry */
+  .inquiry{max-width:440px; width:100%; margin:0 auto; padding:30px 28px; border-radius:18px; text-align:center;
+    background:linear-gradient(180deg,rgba(107,91,224,0.10),rgba(255,255,255,0.02)); border:1px solid var(--line);}
+  .inquiry h2{font-family:var(--display); font-weight:500; letter-spacing:.04em; font-size:1.25rem; margin:0;}
+  .inquiry p{max-width:34ch; margin:12px auto 22px; font-size:.9rem; line-height:1.55; color:var(--inkSoft);}
+  .send{display:inline-block; font-family:var(--body); font-weight:500; font-size:.9rem; color:var(--bg);
+    text-decoration:none; background:linear-gradient(90deg,var(--periwinkle),var(--lavender));
+    border-radius:10px; padding:12px 22px;}
+  .send:hover{filter:brightness(1.08);}
+
+  .field{display:flex; flex-direction:column; gap:6px; text-align:left; margin-bottom:14px;}
+  .field label{font-size:.72rem; letter-spacing:.04em; color:var(--inkFaint);}
+  .field input, .field textarea{
+    width:100%; background:rgba(0,0,0,.3); border:1px solid var(--line); color:var(--ink);
+    font-family:var(--body); font-size:.9rem; padding:11px 13px; border-radius:10px; resize:vertical;}
+  .field input::placeholder, .field textarea::placeholder{color:var(--inkFaint);}
+  .field input:focus, .field textarea:focus{outline:2px solid var(--periwinkle); outline-offset:1px;}
+  .send{display:inline-block; width:100%; font-family:var(--body); font-weight:500; font-size:.9rem;
+    color:var(--bg); text-decoration:none; cursor:pointer; border:none;
+    background:linear-gradient(90deg,var(--periwinkle),var(--lavender)); border-radius:10px; padding:12px 22px; margin-top:4px;}
+  .send:hover{filter:brightness(1.08);}
+  .thanks{color:var(--periwinkle); font-size:.95rem; margin:8px 0; line-height:1.5;}
+  .fallback{font-size:.72rem; color:var(--inkFaint); margin:16px 0 0; line-height:1.5;}
+  .fallback a{color:var(--periwinkle); text-decoration:none;}
+  .fallback a:hover{text-decoration:underline;}
+
+  .footer{text-align:center; font-size:.74rem; color:var(--inkFaint);}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--lavender); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){.atmosphere{animation:none}.bit{animation:none}}
+</style>
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <div>
+      <div class="mark" aria-label="VERSIDIAN">
+        <span>V</span>
+        <span class="bars" aria-hidden="true"><i></i><i class="mid"></i><i></i></span>
+        <span>RSIDIAN</span>
+      </div>
+      <p class="tagline">Prove age. Keep control.</p>
+    </div>
+
+    <div class="chip">
+      <div class="chip-head">
+        <span class="eyebrow">A service asks</span>
+        <span class="query">"Is this person over 18?"</span>
+      </div>
+      <div class="redacted" aria-hidden="true">
+        <div class="row"><span class="label">Name</span><span class="val">████████ ███████</span></div>
+        <div class="row"><span class="label">Date of birth</span><span class="val">██ / ██ / ████</span></div>
+        <div class="row"><span class="label">Document no.</span><span class="val">███████████</span></div>
+        <div class="row"><span class="label">Address</span><span class="val">███ █████████ ██, ████</span></div>
+      </div>
+      <div class="answer" id="answer">
+        <button class="run" type="button">Answer the question</button>
+      </div>
+      <button class="reset" id="resetBtn" style="display:none">Reset</button>
+    </div>
+
+    <div class="inquiry">
+      <h2 id="inq-title">Get in touch</h2>
+      <p id="inq-sub">For questions or inquiries, send us a note.</p>
+
+      <!-- Wired to the Zoho form "Inquiry Requests from web page".
+           Posts to the hidden iframe below, so the page never reloads. -->
+      <form id="inquiryForm"
+            action="https://forms.zohopublic.com/jeremyvers1/form/InquiryRequestsfromwebpage/formperma/8XR6GBgq-oKwiMt6y4A_40n_Epo8JWaSX7pIO-IBNdc/htmlRecords/submit"
+            method="POST"
+            target="zohoSink"
+            accept-charset="UTF-8"
+            enctype="multipart/form-data">
+        <!-- Zoho housekeeping fields (leave as-is) -->
+        <input type="hidden" name="zf_referrer_name" value="" />
+        <input type="hidden" name="zf_redirect_url" value="" />
+        <input type="hidden" name="zc_gad" value="" />
+        <div class="field">
+          <label for="inq-email">Email</label>
+          <input id="inq-email" type="email" name="Email" maxlength="255"
+                 placeholder="you@example.com" required />
+        </div>
+        <div class="field">
+          <label for="inq-msg">Message</label>
+          <textarea id="inq-msg" name="MultiLine" rows="4" maxlength="65535"
+                    placeholder="How can we help?" required></textarea>
+        </div>
+        <button class="send" type="submit">Send inquiry</button>
+      </form>
+
+      <p class="fallback">Or email directly:
+        <a href="mailto:Inquiries@Versidian.com">Inquiries@Versidian.com</a></p>
+
+      <!-- Hidden target: the form posts here so the page never reloads. -->
+      <iframe name="zohoSink" title="form-sink" style="display:none" aria-hidden="true"></iframe>
+    </div>
+
+    <div class="footer">© 2026 Versidian</div>
+  </main>
+
+  <script>
+    (function(){
+      var answer = document.getElementById('answer');
+      var resetBtn = document.getElementById('resetBtn');
+      var timer;
+
+      var idleHTML = '<button class="run" type="button">Answer the question</button>';
+
+      function showIdle(){
+        clearTimeout(timer);
+        answer.innerHTML = idleHTML;
+        resetBtn.style.display = 'none';
+      }
+
+      function showAnswer(){
+        answer.innerHTML = '<span class="note">Checking…</span>';
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+          answer.innerHTML =
+            '<span class="bit">YES</span>' +
+            '<span class="note">That single bit is all the service learns. Everything above stays with the person.</span>';
+          resetBtn.style.display = 'block';
+        }, 900);
+      }
+
+      // Delegate clicks on the "Answer the question" button (it gets re-created on reset).
+      answer.addEventListener('click', function(e){
+        if (e.target && e.target.classList.contains('run')) showAnswer();
+      });
+      resetBtn.addEventListener('click', showIdle);
+
+      showIdle();
+
+      // --- Inquiry form: posts to Zoho in a hidden iframe, then shows a thank-you. ---
+      var form = document.getElementById('inquiryForm');
+      if (form) {
+        form.addEventListener('submit', function(){
+          // The native POST goes to the hidden iframe (target="zohoSink"),
+          // so the page itself never navigates. We just swap in a thank-you.
+          var card = form.parentNode;
+          setTimeout(function(){
+            document.getElementById('inq-title').textContent = 'Thanks';
+            document.getElementById('inq-sub').textContent = "Your note's on its way — we'll be in touch.";
+            form.style.display = 'none';
+          }, 150);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
